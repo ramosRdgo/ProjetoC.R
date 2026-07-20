@@ -45,8 +45,20 @@ O arquivo segue a estrutura de lista de arestas (*edgelist*), onde cada linha li
 '''))
 
 # Cell 5: Section 2 Code
-cells.append(nbf.v4.new_code_cell('''# Carregando o arquivo da rede real (.edges)
+cells.append(nbf.v4.new_code_cell('''import os
+import urllib.request
+import networkx as nx
+
+# Caminho do arquivo da rede real (.edges)
 caminho_arquivo = 'bn-cat-mixed-species_brain_1.edges'
+url_dataset = 'https://raw.githubusercontent.com/ramosRdgo/ProjetoC.R/main/bn-cat-mixed-species_brain_1.edges'
+
+# Baixa o arquivo automaticamente caso ele não exista no ambiente atual (ex: Google Colab recém-aberto)
+if not os.path.exists(caminho_arquivo):
+    print(f"O arquivo '{caminho_arquivo}' não foi encontrado localmente.")
+    print("Iniciando o download diretamente do repositório GitHub...")
+    urllib.request.urlretrieve(url_dataset, caminho_arquivo)
+    print("Download concluído com sucesso!\\n")
 
 # nx.read_edgelist carrega a lista de arestas criando o grafo não-direcionado
 G_real = nx.read_edgelist(caminho_arquivo, create_using=nx.Graph(), nodetype=int)
