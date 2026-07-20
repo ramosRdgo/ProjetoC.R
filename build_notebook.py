@@ -8,7 +8,7 @@ cells = []
 cells.append(nbf.v4.new_markdown_cell('''# Projeto Prático: Análise de Redes Complexas com Python e NetworkX
 
 **Disciplina:** Comunicação e Redes  
-**Integrantes do Grupo:** [Preencher Nomes dos Integrantes]  
+**Aluno / Autor:** Rodrigo Ramos  
 **Rede Analisada:** Rede Neural Cortical de Felino (`bn-cat-mixed-species_brain_1`)  
 **Data:** 2026
 
@@ -18,7 +18,7 @@ cells.append(nbf.v4.new_markdown_cell('''# Projeto Prático: Análise de Redes C
 # Cell 2: Section 1 Markdown
 cells.append(nbf.v4.new_markdown_cell('''## 1. Importação das Bibliotecas
 
-Para a realização deste trabalho prático, utilizamos a biblioteca **NetworkX**, padrão no ecossistema Python para análise e modelagem de grafos e redes complexas. Também usamos o **Matplotlib** para a geração dos gráficos de distribuição e topologia de rede, além de **Pandas** e **NumPy** para auxílio no tratamento de dados e métricas estatísticas.
+Para a realização deste trabalho prático individual, utilizei a biblioteca **NetworkX**, padrão no ecossistema Python para análise e modelagem de grafos e redes complexas. Também utilizei **Matplotlib** para a geração dos gráficos de distribuição e topologia de rede, além de **Pandas** e **NumPy** para auxílio no tratamento estatístico dos dados.
 '''))
 
 # Cell 3: Section 1 Code
@@ -39,9 +39,9 @@ print("Versão do NetworkX:", nx.__version__)
 # Cell 4: Section 2 Markdown
 cells.append(nbf.v4.new_markdown_cell('''## 2. Carregamento e Caracterização da Rede Real
 
-Nesta etapa, carregamos o arquivo `bn-cat-mixed-species_brain_1.edges`. Este dataset representa o mapa de conexões corticais (conectoma) de cérebro de felino, extraído de dados biológicos reais.
+Nesta etapa, carrego o arquivo `bn-cat-mixed-species_brain_1.edges`. Este dataset representa o mapa de conexões corticais (conectoma) do cérebro de um gato, extraído de dados biológicos reais.
 
-O arquivo segue a estrutura de lista de arestas (*edgelist*), em que cada linha lista um par de nós conectados por uma aresta. O comando `nx.read_edgelist` lê o arquivo e monta a estrutura de grafo não-direcionado em memória.
+O arquivo segue a estrutura de lista de arestas (*edgelist*), onde cada linha lista um par de nós conectados por uma aresta. O comando `nx.read_edgelist` lê o arquivo e monta a estrutura de grafo não-direcionado em memória.
 '''))
 
 # Cell 5: Section 2 Code
@@ -58,7 +58,7 @@ print(f"Instância do Grafo: {G_real}")
 # Cell 6: Section 3 Markdown
 cells.append(nbf.v4.new_markdown_cell('''## 3. Análise Básica da Rede Real
 
-De acordo com as orientações do projeto prático, calculamos as 3 métricas fundamentais para a rede real:
+De acordo com as orientações do projeto prático, calculei as 3 métricas fundamentais para a rede real:
 
 1. **Ordem ($N$)**: Quantidade de nós (regiões corticais) do grafo.
 2. **Coeficiente de Agrupamento Médio ($C$)**: Média dos coeficientes de agrupamento locais dos nós. Mede o grau em que os vizinhos de um nó tendem a se conectar entre si.
@@ -85,9 +85,9 @@ print(f" - Densidade (ρ): {densidade_real:.4f}")
 # Cell 8: Section 4 Markdown
 cells.append(nbf.v4.new_markdown_cell('''## 4. Geração e Comparação com Rede Aleatória (Erdős-Rényi)
 
-Para verificar se a estrutura da rede biológica se comporta diferente de uma rede puramente aleatória, criamos um grafo aleatório do modelo de **Erdős-Rényi** $G(N, M)$.
+Para verificar se a estrutura da rede biológica se comporta diferente de uma rede puramente aleatória, criei um grafo aleatório utilizando o modelo de **Erdős-Rényi** $G(N, M)$.
 
-Para uma comparação justa, a rede aleatória é gerada com **exatamente a mesma ordem** ($N = 65$) e **mesmo número de arestas** ($M = 730$) da nossa rede real. Em seguida, calculamos as mesmas 3 medidas básicas.
+Para uma comparação justa, a rede aleatória foi gerada com **exatamente a mesma ordem** ($N = 65$) e **mesmo número de arestas** ($M = 730$) da rede real. Em seguida, calculei as mesmas 3 medidas básicas.
 '''))
 
 # Cell 9: Section 4 Code
@@ -112,11 +112,11 @@ print(f" - Densidade (ρ): {densidade_aleat:.4f}")
 # Cell 10: Section 5 Markdown
 cells.append(nbf.v4.new_markdown_cell('''## 5. Análise Adicional 1: Modelo de Pequeno Mundo (Watts-Strogatz)
 
-Como **primeira análise adicional**, exploramos o modelo de **Pequeno Mundo** (*Small-World Network*), proposto por Watts e Strogatz. 
+Como **primeira análise adicional**, escolhi explorar o modelo de **Pequeno Mundo** (*Small-World Network*), proposto por Watts e Strogatz. 
 
 Redes biológicas e neurais costumam apresentar a chamada "propriedade de pequeno mundo", caracterizada por um alto agrupamento local (formação de módulos) e, ao mesmo tempo, curtos caminhos de separação entre quaisquer dois nós.
 
-Geramos uma rede Watts-Strogatz mantendo a ordem $N = 65$, grau médio $k \\approx \\frac{2M}{N}$ e uma probabilidade de reconexão aleatória $p = 0.1$.
+Gerei uma rede Watts-Strogatz mantendo a ordem $N = 65$, grau médio $k \\approx \\frac{2M}{N}$ e uma probabilidade de reconexão aleatória $p = 0.1$.
 '''))
 
 # Cell 11: Section 5 Code
@@ -141,7 +141,7 @@ print(f" - Densidade (ρ): {densidade_sw:.4f}")
 # Cell 12: Section 6 Markdown
 cells.append(nbf.v4.new_markdown_cell('''## 6. Análise Adicional 2: Distribuição de Graus, Diâmetro e Grau Médio de Separação
 
-Como **segunda análise adicional**, realizamos uma investigação complementar focada em:
+Como **segunda análise adicional**, realizei uma investigação complementar focada em:
 
 1. **Diâmetro da Rede**: A maior distância (menor caminho) entre qualquer par de nós navegáveis.
 2. **Grau Médio de Separação (Caminho Mínimo Médio - $L$)**: O número médio de passos necessários para ir de um nó a qualquer outro na rede.
@@ -216,7 +216,7 @@ plt.show()
 # Cell 16: Section 7 Markdown
 cells.append(nbf.v4.new_markdown_cell('''## 7. Quadro Resumo Comparativo das Métricas
 
-Abaixo consolidamos as métricas de todas as três redes em uma única tabela para facilitar a análise comparativa durante a apresentação.
+Abaixo consolido as métricas de todas as três redes em uma única tabela para facilitar a análise comparativa na apresentação.
 '''))
 
 # Cell 17: Section 7 Code
@@ -238,7 +238,7 @@ print(tabela_comparativa.to_string(index=False))
 # Cell 18: Section 8 Markdown
 cells.append(nbf.v4.new_markdown_cell('''## 8. Conclusões e Discussão dos Resultados
 
-A partir dos testes e dados extraídos neste trabalho prático, destacamos os seguintes pontos para a apresentação:
+A partir dos testes e dados extraídos neste trabalho prático, destaco os seguintes pontos principais:
 
 1. **Elevado Coeficiente de Agrupamento no Cérebro**:
    A rede cortical real possui um Coeficiente de Agrupamento ($C$) bem superior ao modelo aleatório de Erdős-Rényi. Isso indica que as regiões cerebrais se organizam em módulos ou aglomerados locais especializados.
@@ -247,7 +247,7 @@ A partir dos testes e dados extraídos neste trabalho prático, destacamos os se
    Mesmo com um alto agrupamento local, o caminho mínimo médio ($L \\approx 1.8$) e o diâmetro da rede real permanecem extremamente pequenos, no mesmo patamar de uma rede aleatória. Isso comprova que a rede neural de felinos funciona sob o paradigma de **Pequeno Mundo**, otimizando o fluxo de sinalização neural com baixo custo de fiação e alta integração global.
 
 3. **Distribuição de Graus Não-Homogênea**:
-   Ao observar a distribuição de graus, notamos que a rede real conta com áreas centrais (*hubs* corticais) highly conectadas que atuam como pontes entre diferentes regiões do cérebro, diferenciando-se da distribuição de Poisson característica de redes aleatórias homogêneas.
+   Ao observar a distribuição de graus, notamos que a rede real conta com áreas centrais (*hubs* corticais) altamente conectadas que atuam como pontes entre diferentes regiões do cérebro, diferenciando-se da distribuição de Poisson característica de redes aleatórias homogêneas.
 '''))
 
 nb['cells'] = cells
@@ -255,4 +255,4 @@ nb['cells'] = cells
 with open('projeto_redes.ipynb', 'w', encoding='utf-8') as f:
     nbf.write(nb, f)
 
-print('projeto_redes.ipynb criado com sucesso!')
+print('projeto_redes.ipynb atualizado com sucesso (Linguagem Individual)!')

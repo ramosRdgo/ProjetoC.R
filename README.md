@@ -1,8 +1,10 @@
 # Projeto Prático: Análise de Redes Complexas com NetworkX
 
-Este repositório contém a implementação do **Projeto Prático da disciplina de Comunicação e Redes**, desenvolvido em **Python** utilizando a biblioteca **NetworkX**.
+Este repositório contém a implementação individual do **Projeto Prático da disciplina de Comunicação e Redes**, desenvolvido em **Python** utilizando a biblioteca **NetworkX**.
 
 O trabalho consiste na análise estrutural e estatística de uma rede biológica real (mapa de conexões corticais de felino) comparada a modelos teóricos de **Redes Aleatórias (Erdős-Rényi)** e **Redes de Pequeno Mundo (Watts-Strogatz)**.
+
+**Autor:** Rodrigo Ramos  
 
 ---
 
@@ -10,6 +12,7 @@ O trabalho consiste na análise estrutural e estatística de uma rede biológica
 
 - **[`projeto_redes.ipynb`](./projeto_redes.ipynb)**: Jupyter Notebook principal contendo o código executado, explicações teóricas intercaladas e visualizações gráficas.
 - **[`bn-cat-mixed-species_brain_1.edges`](./bn-cat-mixed-species_brain_1.edges)**: Dataset da rede real em formato de lista de arestas (*edgelist*).
+- **[`roteiro_apresentacao.md`](./roteiro_apresentacao.md)**: Guia passo a passo com a fala da apresentação individual de 8 minutos.
 - **[`distribuicao_graus.png`](./distribuicao_graus.png)**: Gráfico de distribuição de graus ($P(k)$).
 - **[`comparacao_topologia.png`](./comparacao_topologia.png)**: Visualização topológica dos 3 modelos de redes.
 
