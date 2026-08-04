@@ -47,21 +47,41 @@ O arquivo segue a estrutura de lista de arestas (*edgelist*), onde cada linha li
 # Cell 5: Section 2 Code
 cells.append(nbf.v4.new_code_cell('''import os
 import urllib.request
+import gzip
 import networkx as nx
 
-# Caminho do arquivo da rede real (.edges)
 caminho_arquivo = 'instagram_sample.edges'
-url_dataset = 'https://raw.githubusercontent.com/ramosRdgo/ProjetoC.R/main/instagram_sample.edges'
+url_dataset = 'https://snap.stanford.edu/data/facebook_combined.txt.gz'
+gz_path = 'facebook_combined.txt.gz'
 
-# Baixa o arquivo automaticamente caso ele não exista no ambiente atual (ex: Google Colab recém-aberto)
+# Baixa e amostra o arquivo automaticamente no Colab
 if not os.path.exists(caminho_arquivo):
-    print(f"O arquivo '{caminho_arquivo}' não foi encontrado localmente.")
-    print("Iniciando o download diretamente do repositório GitHub...")
-    urllib.request.urlretrieve(url_dataset, caminho_arquivo)
-    print("Download concluído com sucesso!\\n")
-
-# nx.read_edgelist carrega a lista de arestas criando o grafo não-direcionado
-G_real = nx.read_edgelist(caminho_arquivo, create_using=nx.Graph(), nodetype=int)
+    print("Baixando base de dados completa do SNAP (Stanford)...")
+    urllib.request.urlretrieve(url_dataset, gz_path)
+    
+    print("Extraindo e processando amostra da rede social...")
+    with gzip.open(gz_path, 'rt') as f_in:
+        G_full = nx.read_edgelist(f_in, nodetype=int)
+    
+    # Criando uma amostra de 300 nós por busca em largura (BFS) para manter conectividade
+    start_node = list(G_full.nodes())[0]
+    sample_nodes = set([start_node])
+    queue = [start_node]
+    
+    while len(sample_nodes) < 300 and queue:
+        current = queue.pop(0)
+        for neighbor in G_full.neighbors(current):
+            if neighbor not in sample_nodes:
+                sample_nodes.add(neighbor)
+                queue.append(neighbor)
+                if len(sample_nodes) >= 300:
+                    break
+                    
+    G_real = G_full.subgraph(sample_nodes).copy()
+    nx.write_edgelist(G_real, caminho_arquivo, data=False)
+    print(f"Amostra salva localmente como {caminho_arquivo}!\\n")
+else:
+    G_real = nx.read_edgelist(caminho_arquivo, create_using=nx.Graph(), nodetype=int)
 
 print("Rede real carregada com sucesso!")
 print(f"Instância do Grafo: {G_real}")
