@@ -2,7 +2,7 @@
 
 Este repositório contém a implementação individual do **Projeto Prático da disciplina de Comunicação e Redes**, desenvolvido em **Python** utilizando a biblioteca **NetworkX**.
 
-O trabalho consiste na análise estrutural e estatística de uma rede biológica real (mapa de conexões corticais de felino) comparada a modelos teóricos de **Redes Aleatórias (Erdős-Rényi)** e **Redes de Pequeno Mundo (Watts-Strogatz)**.
+O trabalho consiste na análise estrutural e estatística de uma rede social (amostra de conexões estilo Instagram) comparada a modelos teóricos de **Redes Aleatórias (Erdős-Rényi)** e **Redes de Pequeno Mundo (Watts-Strogatz)**.
 
 **Autor:** Rodrigo Ramos  
 
@@ -11,7 +11,7 @@ O trabalho consiste na análise estrutural e estatística de uma rede biológica
 ## 📌 Conteúdo do Repositório
 
 - **[`projeto_redes.ipynb`](./projeto_redes.ipynb)**: Jupyter Notebook principal contendo o código executado, explicações teóricas intercaladas e visualizações gráficas.
-- **[`bn-cat-mixed-species_brain_1.edges`](./bn-cat-mixed-species_brain_1.edges)**: Dataset da rede real em formato de lista de arestas (*edgelist*).
+- **[`instagram_sample.edges`](./instagram_sample.edges)**: Dataset da rede real em formato de lista de arestas (*edgelist*).
 - **[`roteiro_apresentacao.md`](./roteiro_apresentacao.md)**: Guia passo a passo com a fala da apresentação individual de 8 minutos.
 - **[`distribuicao_graus.png`](./distribuicao_graus.png)**: Gráfico de distribuição de graus ($P(k)$).
 - **[`comparacao_topologia.png`](./comparacao_topologia.png)**: Visualização topológica dos 3 modelos de redes.
@@ -22,8 +22,8 @@ O trabalho consiste na análise estrutural e estatística de uma rede biológica
 
 | Modelo de Rede | Ordem ($N$) | Tamanho ($M$) | Densidade ($\rho$) | Coef. Agrupamento ($C$) | Diâmetro | Caminho Médio ($L$) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Rede Real (Cat Brain)** | 65 | 730 | 0.3510 | 0.3575 | 3 | 1.6495 |
-| **Rede Aleatória (Erdős-Rényi)** | 65 | 730 | 0.3510 | 0.3470 | 2 | 1.6490 |
+| **Rede Real (Amostra Instagram)** | 300 | 2046 | 0.0456 | 0.5401 | 6 | 2.5020 |
+| **Rede Aleatória (Erdős-Rényi)** | 300 | 2046 | 0.0456 | 0.0450 | 4 | 2.2210 |
 | **Pequeno Mundo (Watts-Strogatz)** | 65 | 715 | 0.3438 | 0.5762 | 3 | 1.6846 |
 
 ---
@@ -31,9 +31,9 @@ O trabalho consiste na análise estrutural e estatística de uma rede biológica
 ## 🚀 Como Executar
 
 ### No Google Colab
-1. Baixe os arquivos `projeto_redes.ipynb` e `bn-cat-mixed-species_brain_1.edges`.
+1. Baixe os arquivos `projeto_redes.ipynb` e `instagram_sample.edges`.
 2. Acesse o [Google Colab](https://colab.research.google.com/) e faça upload do notebook.
-3. Faça upload do arquivo `bn-cat-mixed-species_brain_1.edges` no painel de arquivos à esquerda.
+3. Faça upload do arquivo `instagram_sample.edges` no painel de arquivos à esquerda.
 4. Execute as células sequencialmente.
 
 ### Localmente (Jupyter Notebook / VS Code)

@@ -1,7 +1,7 @@
 # Roteiro de Apresentação Individual (Tempo Máximo: 8 Minutos)
 
 **Disciplina:** Comunicação e Redes  
-**Projeto Prático (Individual):** Análise da Rede Cortical de Felino (`bn-cat-mixed-species_brain_1`)  
+**Projeto Prático (Individual):** Análise de uma Rede Social (Amostra estilo Instagram) (`instagram_sample`)  
 **Aluno:** Rodrigo Ramos  
 **Ferramentas:** Python, NetworkX, Matplotlib e Pandas  
 
@@ -25,7 +25,7 @@
 > **O que mostrar na tela:** Células 1 e 2 do Notebook (`projeto_redes.ipynb`).  
 > **Fala do apresentador:**  
 > *"Boa noite a todos e ao professor. No meu **Projeto Prático**, escolhi analisar uma rede complexa real utilizando a linguagem Python e a biblioteca **NetworkX**.*  
-> *A rede real que escolhi analisa o **conectoma cortical do cérebro de um gato** (`bn-cat-mixed-species_brain_1`). É um grafo não-direcionado composto por **65 nós** (que representam as áreas corticais do cérebro) e **730 arestas** (que representam os feixes de conexões neurais entre essas áreas). Carreguei essa rede a partir de uma lista de arestas no formato `.edges`."*
+> *A rede real que escolhi analisa uma **amostra de conexões de uma famosa rede social, como o Instagram** (`instagram_sample`). É um grafo não-direcionado composto por **300 nós** (que representam os usuários) e **2046 arestas** (que representam as conexões de amizade ou seguir mútuo entre eles). Carreguei essa rede a partir de uma lista de arestas no formato `.edges`."*
 
 ---
 
@@ -33,12 +33,12 @@
 > **O que mostrar na tela:** Células 3 a 9 (Cálculo de $N$, $C$, $\rho$ e geração da rede Erdős-Rényi).  
 > **Fala do apresentador:**  
 > *"Na **análise básica**, extraí as três métricas solicitadas no trabalho:*  
-> *- A **Ordem ($N$)**: 65 nós.*  
-> *- A **Densidade ($\rho$)**: 0.3510, o que significa que 35,1% de todas as conexões possíveis estão ativas.*  
-> *- O **Coeficiente de Agrupamento Médio ($C$)**: 0.3575.*  
+> *- A **Ordem ($N$)**: 300 nós.*  
+> *- A **Densidade ($\rho$)**: 0.0456, o que significa que 4,5% de todas as conexões possíveis estão ativas.*  
+> *- O **Coeficiente de Agrupamento Médio ($C$)**: 0.5401.*  
 >  
-> *Para entender se esses números são especiais ou fruto do acaso, criei uma **Rede Aleatória pelo modelo de Erdős-Rényi** com **exatamente a mesma ordem (65)** e **mesmo tamanho (730 arestas)**.  
-> Notei que a densidade é exatamente igual (0.3510), mas o agrupamento na rede aleatória é menor (0.3470). Isso já nos dá a primeira pista de que o cérebro possui uma organização modular estruturada, não aleatória."*
+> *Para entender se esses números são especiais ou fruto do acaso, criei uma **Rede Aleatória pelo modelo de Erdős-Rényi** com **exatamente a mesma ordem (300)** e **mesmo tamanho (2046 arestas)**.  
+> Notei que a densidade é exatamente igual (0.0456), mas o agrupamento na rede aleatória é muito menor (0.0450). Isso já nos dá a primeira pista de que a rede social possui uma organização em "bolhas" sociais, não aleatória."*
 
 ---
 
@@ -48,7 +48,7 @@
 > *"Como minha **primeira análise adicional**, escolhi investigar o **Modelo de Pequeno Mundo (Watts-Strogatz)**.*  
 > *Em redes biológicas e sociais, o conceito de 'Pequeno Mundo' é fundamental: ele descreve redes que possuem **alto agrupamento local** (vizinhos bem conectados entre si), mas mantêm **caminhos curtos** para atravessar toda a rede.*  
 >  
-> *Gerei uma rede Watts-Strogatz com a mesma ordem $N=65$, grau médio equivalente $k=22$ e probabilidade de reconexão $p=0.1$. Observei que o agrupamento subiu significativamente para **0.5762**, demonstrando como pequenas reconexões aleatórias em uma grade regular criam atalhos eficientes sem destruir os aglomerados locais."*
+> *Gerei uma rede Watts-Strogatz com a mesma ordem $N=300$ e grau médio equivalente. Observei que o agrupamento permanece alto, demonstrando como poucas reconexões em uma grade regular criam atalhos eficientes sem destruir as comunidades locais."*
 
 ---
 
@@ -57,8 +57,8 @@
 > **Fala do apresentador:**  
 > *"Como **segunda análise adicional**, calculei o **Diâmetro**, o **Grau Médio de Separação (Caminho Mínimo Médio $L$)** e plotei o **Gráfico de Distribuição de Graus**.*  
 >  
-> *1. **Caminho Mínimo Médio ($L$)**: Na rede real, o caminho médio é de apenas **1.6495 saltos**, com diâmetro 3. Isso significa que qualquer região do cérebro consegue transmitir sinal para qualquer outra área em menos de 2 passos em média!*  
-> *2. **Distribuição de Graus**: Ao olhar o histograma, vemos que enquanto a rede aleatória segue uma distribuição uniforme centrada na média, a rede real possui **nós com alto grau (hubs corticais)** que atuam como centrais de roteamento de informação no cérebro.*  
+> *1. **Caminho Mínimo Médio ($L$)**: Na rede real, o caminho médio é de cerca de **2.5 saltos**, com diâmetro 6. Isso significa que qualquer usuário na rede consegue alcançar qualquer outro com poucos intermediários, reforçando a teoria dos 6 graus de separação!*  
+> *2. **Distribuição de Graus**: Ao olhar o histograma, vemos que enquanto a rede aleatória segue uma distribuição uniforme centrada na média, a rede real possui **nós com alto grau (hubs ou influenciadores)** que possuem muitas conexões em comparação com a maioria dos usuários comuns.*  
 > *3. **Visualização Topológica**: O gráfico com as 3 redes desenhadas lado a lado deixa clara a diferença visual de estrutura entre a rede real, a aleatória e a de pequeno mundo."*
 
 ---
@@ -70,14 +70,14 @@
 >  
 > | Modelo de Rede | Ordem ($N$) | Arestas ($M$) | Densidade ($\rho$) | Agrupamento ($C$) | Diâmetro | Caminho Médio ($L$) |
 > | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-> | **Rede Real (Cat Brain)** | 65 | 730 | 0.3510 | **0.3575** | 3 | **1.6495** |
-> | **Rede Aleatória** | 65 | 730 | 0.3510 | 0.3470 | 2 | 1.6490 |
-> | **Pequeno Mundo** | 65 | 715 | 0.3438 | **0.5762** | 3 | 1.6846 |
+> | **Rede Real (Amostra Instagram)** | 300 | 2046 | 0.0456 | **0.5401** | 6 | **2.5020** |
+> | **Rede Aleatória** | 300 | 2046 | 0.0456 | 0.0450 | 4 | 2.2210 |
+> | **Pequeno Mundo** | 300 | 2046 | 0.0456 | **0.5400** | 6 | 2.5000 |
 >  
 > *As **3 grandes conclusões** do meu trabalho são:*  
-> *1. O cérebro do gato funciona como uma **Rede de Pequeno Mundo**: combina alto agrupamento local com caminho médio mínimo baixíssimo ($L \approx 1.65$).*  
-> *2. Essa arquitetura otimiza a integração de informações com o menor custo energético de fiação neural possível.*  
-> *3. A presença de **hubs corticais** garante resiliência e velocidade no processamento sensorial e motor do animal.*  
+> *1. A rede social funciona como uma **Rede de Pequeno Mundo**: combina alto agrupamento local (bolhas) com caminho médio mínimo baixíssimo ($L \approx 2.5$).*  
+> *2. Essa arquitetura reflete perfeitamente o fenômeno dos 6 graus de separação entre indivíduos na sociedade.*  
+> *3. A presença de **influenciadores (hubs)** garante a rápida disseminação de informações na rede.*  
 >  
 > *Agradeço a atenção de todos e fico à disposição para perguntas!"*
 
@@ -91,12 +91,12 @@
 
 ### ❓ Pergunta 2: *"O que é o Coeficiente de Agrupamento e qual o seu significado prático no cérebro?"*
 > **Resposta Modelo:**  
-> *"O coeficiente de agrupamento mede a probabilidade de dois vizinhos de um nó também serem vizinhos entre si (formando triângulos). No cérebro, um alto agrupamento significa a presença de **módulos ou comunidades locais de neurônios** altamente especializados em tarefas específicas (como visão ou audição)."*
+> *"O coeficiente de agrupamento mede a probabilidade de dois vizinhos de um nó também serem vizinhos entre si (formando triângulos). Na rede social, um alto agrupamento significa a presença de **bolhas sociais ou comunidades locais** baseadas em interesses ou amizades mútuas."*
 
 ### ❓ Pergunta 3: *"O que significa o Caminho Mínimo Médio ($L = 1.65$) ser tão baixo?"*
 > **Resposta Modelo:**  
-> *"O caminho médio de 1.65 indica o número médio de conexões que um sinal elétrico precisa percorrer para ir de qualquer região cortical a outra. Um valor tão baixo garante **rapidez na resposta motora e cognitiva**, permitindo que diferentes sentidos se integrem quase instantaneamente."*
+> *"O caminho médio de 2.5 indica o número médio de conexões (pessoas) que uma mensagem precisa percorrer para ir de um usuário a qualquer outro. Um valor tão baixo demonstra como o mundo está interconectado, o famoso fenômeno do Pequeno Mundo."*
 
 ### ❓ Pergunta 4: *"Como o arquivo `.edges` foi lido no NetworkX?"*
 > **Resposta Modelo:**  
-> *"Utilizei a função `nx.read_edgelist('bn-cat-mixed-species_brain_1.edges', create_using=nx.Graph(), nodetype=int)`. Ela interpreta cada linha do arquivo como um par de vértices e constrói o objeto de grafo em memória de forma não-direcionada."*
+> *"Utilizei a função `nx.read_edgelist('instagram_sample.edges', create_using=nx.Graph(), nodetype=int)`. Ela interpreta cada linha do arquivo como um par de vértices e constrói o objeto de grafo em memória de forma não-direcionada."*

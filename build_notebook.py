@@ -9,7 +9,7 @@ cells.append(nbf.v4.new_markdown_cell('''# Projeto Prático: Análise de Redes C
 
 **Disciplina:** Comunicação e Redes  
 **Aluno / Autor:** Rodrigo Ramos  
-**Rede Analisada:** Rede Neural Cortical de Felino (`bn-cat-mixed-species_brain_1`)  
+**Rede Analisada:** Rede Social (Amostra estilo Instagram) (`instagram_sample`)  
 **Data:** 2026
 
 ---
@@ -39,7 +39,7 @@ print("Versão do NetworkX:", nx.__version__)
 # Cell 4: Section 2 Markdown
 cells.append(nbf.v4.new_markdown_cell('''## 2. Carregamento e Caracterização da Rede Real
 
-Nesta etapa, carrego o arquivo `bn-cat-mixed-species_brain_1.edges`. Este dataset representa o mapa de conexões corticais (conectoma) do cérebro de um gato, extraído de dados biológicos reais.
+Nesta etapa, carrego o arquivo `instagram_sample.edges`. Este dataset representa uma amostra de conexões de usuários em uma rede social famosa (semelhante ao Instagram).
 
 O arquivo segue a estrutura de lista de arestas (*edgelist*), onde cada linha lista um par de nós conectados por uma aresta. O comando `nx.read_edgelist` lê o arquivo e monta a estrutura de grafo não-direcionado em memória.
 '''))
@@ -50,8 +50,8 @@ import urllib.request
 import networkx as nx
 
 # Caminho do arquivo da rede real (.edges)
-caminho_arquivo = 'bn-cat-mixed-species_brain_1.edges'
-url_dataset = 'https://raw.githubusercontent.com/ramosRdgo/ProjetoC.R/main/bn-cat-mixed-species_brain_1.edges'
+caminho_arquivo = 'instagram_sample.edges'
+url_dataset = 'https://raw.githubusercontent.com/ramosRdgo/ProjetoC.R/main/instagram_sample.edges'
 
 # Baixa o arquivo automaticamente caso ele não exista no ambiente atual (ex: Google Colab recém-aberto)
 if not os.path.exists(caminho_arquivo):
@@ -72,7 +72,7 @@ cells.append(nbf.v4.new_markdown_cell('''## 3. Análise Básica da Rede Real
 
 De acordo com as orientações do projeto prático, calculei as 3 métricas fundamentais para a rede real:
 
-1. **Ordem ($N$)**: Quantidade de nós (regiões corticais) do grafo.
+1. **Ordem ($N$)**: Quantidade de nós (usuários) do grafo.
 2. **Coeficiente de Agrupamento Médio ($C$)**: Média dos coeficientes de agrupamento locais dos nós. Mede o grau em que os vizinhos de um nó tendem a se conectar entre si.
 3. **Densidade ($\rho$)**: Razão entre a quantidade de arestas existentes e a quantidade máxima possível de arestas para um grafo simples de $N$ nós.
 '''))
@@ -126,7 +126,7 @@ cells.append(nbf.v4.new_markdown_cell('''## 5. Análise Adicional 1: Modelo de P
 
 Como **primeira análise adicional**, escolhi explorar o modelo de **Pequeno Mundo** (*Small-World Network*), proposto por Watts e Strogatz. 
 
-Redes biológicas e neurais costumam apresentar a chamada "propriedade de pequeno mundo", caracterizada por um alto agrupamento local (formação de módulos) e, ao mesmo tempo, curtos caminhos de separação entre quaisquer dois nós.
+Redes sociais costumam apresentar a chamada "propriedade de pequeno mundo", caracterizada por um alto agrupamento local (formação de bolhas ou comunidades) e, ao mesmo tempo, curtos caminhos de separação entre quaisquer dois nós (6 graus de separação).
 
 Gerei uma rede Watts-Strogatz mantendo a ordem $N = 65$, grau médio $k \\approx \\frac{2M}{N}$ e uma probabilidade de reconexão aleatória $p = 0.1$.
 '''))
@@ -179,7 +179,7 @@ diam_aleat, path_aleat = obter_metricas_caminhos(G_aleatorio)
 diam_sw, path_sw = obter_metricas_caminhos(G_smallworld)
 
 print("=== DIÂMETRO E GRAU MÉDIO DE SEPARAÇÃO (CAMINHO MÍNIMO MÉDIO) ===")
-print(f"1. Rede Real (Cérebro do Gato):   Diâmetro = {diam_real}, Caminho Médio (L) = {path_real:.4f}")
+print(f"1. Rede Real (Amostra Instagram): Diâmetro = {diam_real}, Caminho Médio (L) = {path_real:.4f}")
 print(f"2. Rede Aleatória (Erdős-Rényi):   Diâmetro = {diam_aleat}, Caminho Médio (L) = {path_aleat:.4f}")
 print(f"3. Rede Pequeno Mundo (Watts-Strg): Diâmetro = {diam_sw}, Caminho Médio (L) = {path_sw:.4f}")
 '''))
@@ -190,7 +190,7 @@ graus_real = [d for n, d in G_real.degree()]
 graus_aleat = [d for n, d in G_aleatorio.degree()]
 
 plt.figure(figsize=(10, 5))
-plt.hist(graus_real, bins=12, alpha=0.7, color='navy', label='Rede Real (Cérebro do Gato)', edgecolor='black')
+plt.hist(graus_real, bins=12, alpha=0.7, color='navy', label='Rede Real (Amostra Instagram)', edgecolor='black')
 plt.hist(graus_aleat, bins=12, alpha=0.5, color='darkorange', label='Rede Aleatória (Erdős-Rényi)', edgecolor='black')
 
 plt.title('Gráfico de Distribuição de Graus: Real vs. Aleatória', fontsize=14, fontweight='bold')
@@ -212,7 +212,7 @@ pos_a = nx.spring_layout(G_aleatorio, seed=42)
 pos_s = nx.circular_layout(G_smallworld)
 
 nx.draw_networkx(G_real, pos_r, ax=axes[0], node_size=100, node_color='navy', with_labels=False, edge_color='gray', alpha=0.7)
-axes[0].set_title('Rede Real (Cortical)', fontsize=12, fontweight='bold')
+axes[0].set_title('Rede Real (Social)', fontsize=12, fontweight='bold')
 
 nx.draw_networkx(G_aleatorio, pos_a, ax=axes[1], node_size=100, node_color='darkorange', with_labels=False, edge_color='gray', alpha=0.7)
 axes[1].set_title('Rede Aleatória (Erdős-Rényi)', fontsize=12, fontweight='bold')
@@ -234,7 +234,7 @@ Abaixo consolido as métricas de todas as três redes em uma única tabela para 
 # Cell 17: Section 7 Code
 cells.append(nbf.v4.new_code_cell('''# Montagem do DataFrame comparativo
 tabela_comparativa = pd.DataFrame({
-    'Modelo de Rede': ['Rede Real (Cérebro do Gato)', 'Rede Aleatória (Erdős-Rényi)', 'Pequeno Mundo (Watts-Strogatz)'],
+    'Modelo de Rede': ['Rede Real (Amostra Instagram)', 'Rede Aleatória (Erdős-Rényi)', 'Pequeno Mundo (Watts-Strogatz)'],
     'Ordem (N)': [ordem_real, ordem_aleat, ordem_sw],
     'Tamanho (M)': [tamanho_real, G_aleatorio.number_of_edges(), G_smallworld.number_of_edges()],
     'Densidade (ρ)': [round(densidade_real, 4), round(densidade_aleat, 4), round(densidade_sw, 4)],
@@ -252,14 +252,14 @@ cells.append(nbf.v4.new_markdown_cell('''## 8. Conclusões e Discussão dos Resu
 
 A partir dos testes e dados extraídos neste trabalho prático, destaco os seguintes pontos principais:
 
-1. **Elevado Coeficiente de Agrupamento no Cérebro**:
-   A rede cortical real possui um Coeficiente de Agrupamento ($C$) bem superior ao modelo aleatório de Erdős-Rényi. Isso indica que as regiões cerebrais se organizam em módulos ou aglomerados locais especializados.
+1. **Elevado Coeficiente de Agrupamento na Rede Social**:
+   A rede social possui um Coeficiente de Agrupamento ($C$) bem superior ao modelo aleatório de Erdős-Rényi. Isso indica que os usuários tendem a se agrupar em bolhas sociais ou comunidades de interesse.
 
 2. **Propriedade de Pequeno Mundo (Small-World)**:
-   Mesmo com um alto agrupamento local, o caminho mínimo médio ($L \\approx 1.8$) e o diâmetro da rede real permanecem extremamente pequenos, no mesmo patamar de uma rede aleatória. Isso comprova que a rede neural de felinos funciona sob o paradigma de **Pequeno Mundo**, otimizando o fluxo de sinalização neural com baixo custo de fiação e alta integração global.
+   Mesmo com um alto agrupamento local, o caminho mínimo médio e o diâmetro da rede real permanecem pequenos. Isso comprova que redes sociais funcionam sob o paradigma de **Pequeno Mundo** (fenômeno dos 6 graus de separação).
 
 3. **Distribuição de Graus Não-Homogênea**:
-   Ao observar a distribuição de graus, notamos que a rede real conta com áreas centrais (*hubs* corticais) altamente conectadas que atuam como pontes entre diferentes regiões do cérebro, diferenciando-se da distribuição de Poisson característica de redes aleatórias homogêneas.
+   Ao observar a distribuição de graus, notamos que a rede real conta com influenciadores (*hubs*) altamente conectados, diferenciando-se da distribuição mais homogênea de redes aleatórias.
 '''))
 
 nb['cells'] = cells

@@ -8,7 +8,7 @@ import os
 import sys
 
 NOTEBOOK = 'projeto_redes.ipynb'
-EDGES_FILE = 'bn-cat-mixed-species_brain_1.edges'
+EDGES_FILE = 'instagram_sample.edges'
 EXPECTED_PNGS = ['distribuicao_graus.png', 'comparacao_topologia.png']
 
 erros = []
