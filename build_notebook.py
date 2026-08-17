@@ -208,12 +208,19 @@ print(f"3. Rede Pequeno Mundo (Watts-Strg): Diâmetro = {diam_sw}, Caminho Médi
 '''))
 
 # Cell 14: Section 6 Code - Histogram Plot
-cells.append(nbf.v4.new_code_cell('''# Plotando o gráfico de Distribuição de Graus
+cells.append(nbf.v4.new_code_cell('''# Plotando o gráfico de Distribuição de Graus (Histograma)
+# Primeiro eu extraio só a contagem de amizades (o grau) de cada usuário da rede real e da rede aleatória
 graus_real = [d for n, d in G_real.degree()]
 graus_aleat = [d for n, d in G_aleatorio.degree()]
 
+# Aqui eu abro a tela de desenho do Matplotlib, definindo o tamanho da imagem (10x5)
 plt.figure(figsize=(10, 5))
+
+# Ploto o histograma da rede real (azul escuro). 'bins=12' significa que dividi as barras em 12 fatias de dados.
+# O 'alpha=0.7' dá uma leve transparência pra gente conseguir ver se uma barra sobrepor a outra.
 plt.hist(graus_real, bins=12, alpha=0.7, color='navy', label='Rede Real (Amostra Instagram)', edgecolor='black')
+
+# Ploto o histograma da rede aleatória (laranja) no mesmo gráfico pra gente poder comparar visualmente.
 plt.hist(graus_aleat, bins=12, alpha=0.5, color='darkorange', label='Rede Aleatória (Erdős-Rényi)', edgecolor='black')
 
 plt.title('Gráfico de Distribuição de Graus: Real vs. Aleatória', fontsize=14, fontweight='bold')
@@ -227,13 +234,21 @@ plt.show()
 '''))
 
 # Cell 15: Section 6 Code - Topologia Visual
-cells.append(nbf.v4.new_code_cell('''# Visualização topológica comparativa dos grafos
+cells.append(nbf.v4.new_code_cell('''# Visualização topológica comparativa dos grafos (As 'teias de aranha')
+# Crio uma figura grande (18x5) com 3 painéis (axes) lado a lado pra plotar as 3 redes juntas
 fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 
+# Pra desenhar os nós espalhados na tela, preciso de um algoritmo de layout. 
+# O 'spring_layout' tenta afastar nós que não são conectados e aproximar os que são (simula molas).
+# Usei 'seed=42' pra garantir que o desenho sempre saia igual toda vez que eu rodar o código.
 pos_r = nx.spring_layout(G_real, seed=42)
 pos_a = nx.spring_layout(G_aleatorio, seed=42)
+
+# Pro modelo de Pequeno Mundo, uso o 'circular_layout' porque ele nasce de uma estrutura em anel, fica mais didático.
 pos_s = nx.circular_layout(G_smallworld)
 
+# Finalmente, mando o NetworkX desenhar (draw_networkx) a rede real no primeiro painel (axes[0])
+# Tirei as labels ('with_labels=False') porque com 300 usuários ia virar uma mancha preta ilegível de tanto texto.
 nx.draw_networkx(G_real, pos_r, ax=axes[0], node_size=100, node_color='navy', with_labels=False, edge_color='gray', alpha=0.7)
 axes[0].set_title('Rede Real (Social)', fontsize=12, fontweight='bold')
 
