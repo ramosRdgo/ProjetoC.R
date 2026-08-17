@@ -18,7 +18,10 @@ cells.append(nbf.v4.new_markdown_cell('''# Projeto Prático: Análise de Redes C
 # Cell 2: Section 1 Markdown
 cells.append(nbf.v4.new_markdown_cell('''## 1. Importação das Bibliotecas
 
-Para a realização deste trabalho prático individual, utilizei a biblioteca **NetworkX**, padrão no ecossistema Python para análise e modelagem de grafos e redes complexas. Também utilizei **Matplotlib** para a geração dos gráficos de distribuição e topologia de rede, além de **Pandas** e **NumPy** para auxílio no tratamento estatístico dos dados.
+Primeiro, eu preciso carregar as bibliotecas essenciais pro projeto. 
+- **NetworkX**: Essa é a biblioteca principal que vou usar pra criar os grafos e calcular as métricas de redes complexas (como agrupamento, densidade, etc).
+- **Matplotlib**: Vou usar pra desenhar os grafos na tela e gerar os gráficos de barras pra gente visualizar a distribuição.
+- **Pandas e NumPy**: São auxiliares, coloquei pra ajudar a montar a tabela de comparação final e formatar os números direitinho.
 '''))
 
 # Cell 3: Section 1 Code
@@ -39,9 +42,10 @@ print("Versão do NetworkX:", nx.__version__)
 # Cell 4: Section 2 Markdown
 cells.append(nbf.v4.new_markdown_cell('''## 2. Carregamento e Caracterização da Rede Real
 
-Nesta etapa, carrego o arquivo `instagram_sample.edges`. Este dataset representa uma amostra de conexões de usuários em uma rede social famosa (semelhante ao Instagram).
+Aqui eu defino de onde vem a minha rede principal. Escolhi usar dados de conexões de uma rede social (tipo Instagram/Facebook). 
 
-O arquivo segue a estrutura de lista de arestas (*edgelist*), onde cada linha lista um par de nós conectados por uma aresta. O comando `nx.read_edgelist` lê o arquivo e monta a estrutura de grafo não-direcionado em memória.
+Como a base de dados original da Universidade de Stanford (SNAP) é gigante e ia travar tudo se eu tentasse rodar ao vivo, eu fiz um código que baixa o arquivo original zipado direto do site deles, lê tudo, e extrai uma amostra menor (de 300 usuários). 
+Uso a função `nx.read_edgelist` do NetworkX, que basicamente pega esse arquivo de texto (onde cada linha mostra o 'User A' seguindo o 'User B') e transforma isso num objeto de Grafo que o Python consegue entender. Coloquei `create_using=nx.Graph()` pra garantir que é um grafo não-direcionado (a conexão vale pros dois lados).
 '''))
 
 # Cell 5: Section 2 Code
@@ -90,11 +94,11 @@ print(f"Instância do Grafo: {G_real}")
 # Cell 6: Section 3 Markdown
 cells.append(nbf.v4.new_markdown_cell('''## 3. Análise Básica da Rede Real
 
-De acordo com as orientações do projeto prático, calculei as 3 métricas fundamentais para a rede real:
+Agora que o grafo da rede social já tá na memória, eu chamo as funções do NetworkX pra calcular as três métricas base que a professora pediu:
 
-1. **Ordem ($N$)**: Quantidade de nós (usuários) do grafo.
-2. **Coeficiente de Agrupamento Médio ($C$)**: Média dos coeficientes de agrupamento locais dos nós. Mede o grau em que os vizinhos de um nó tendem a se conectar entre si.
-3. **Densidade ($\rho$)**: Razão entre a quantidade de arestas existentes e a quantidade máxima possível de arestas para um grafo simples de $N$ nós.
+1. **Ordem ($N$)**: Chamo a função `number_of_nodes()` pra saber exatamente quantos usuários eu tenho nessa minha amostra.
+2. **Coeficiente de Agrupamento Médio ($C$)**: Uso `nx.average_clustering()`. Essa função passa por todo mundo e vê a probabilidade dos meus amigos também serem amigos entre eles (formação de 'panelinhas').
+3. **Densidade ($\rho$)**: Uso `nx.density()`. Isso aqui calcula o número de amizades que existem de verdade dividido pelo número máximo de amizades que seriam possíveis se todo mundo fosse amigo de todo mundo.
 '''))
 
 # Cell 7: Section 3 Code
@@ -117,9 +121,9 @@ print(f" - Densidade (ρ): {densidade_real:.4f}")
 # Cell 8: Section 4 Markdown
 cells.append(nbf.v4.new_markdown_cell('''## 4. Geração e Comparação com Rede Aleatória (Erdős-Rényi)
 
-Para verificar se a estrutura da rede biológica se comporta diferente de uma rede puramente aleatória, criei um grafo aleatório utilizando o modelo de **Erdős-Rényi** $G(N, M)$.
+Pra provar que as conexões na minha rede social não são pura coincidência, eu preciso comparar ela com uma rede 100% aleatória. O modelo clássico pra isso é o de **Erdős-Rényi**.
 
-Para uma comparação justa, a rede aleatória foi gerada com **exatamente a mesma ordem** ($N = 65$) e **mesmo número de arestas** ($M = 730$) da rede real. Em seguida, calculei as mesmas 3 medidas básicas.
+No código, eu pego exatamente o mesmo número de usuários ($N$) e o mesmo número de conexões ($M$) da minha rede real, e peço pro NetworkX gerar uma rede aleatória com a função `nx.gnm_random_graph`. Assim eu tenho uma base de comparação justa, com o mesmo tamanho, mas onde as conexões foram feitas por 'sorteio'. Depois, eu rodo os mesmos três cálculos de agrupamento e densidade.
 '''))
 
 # Cell 9: Section 4 Code
@@ -173,11 +177,10 @@ print(f" - Densidade (ρ): {densidade_sw:.4f}")
 # Cell 12: Section 6 Markdown
 cells.append(nbf.v4.new_markdown_cell('''## 6. Análise Adicional 2: Distribuição de Graus, Diâmetro e Grau Médio de Separação
 
-Como **segunda análise adicional**, realizei uma investigação complementar focada em:
+Como **segunda análise adicional**, eu fiz um código pra investigar como é 'viajar' por essas redes:
 
-1. **Diâmetro da Rede**: A maior distância (menor caminho) entre qualquer par de nós navegáveis.
-2. **Grau Médio de Separação (Caminho Mínimo Médio - $L$)**: O número médio de passos necessários para ir de um nó a qualquer outro na rede.
-3. **Distribuição de Graus ($P(k)$)**: Gráfico histograma comparando a frequência com que diferentes graus de conexão aparecem na rede real em relação ao modelo aleatório.
+1. Fiz uma funçãozinha `obter_metricas_caminhos` que tenta achar o **Diâmetro** (o caminho mais longo possível entre duas pessoas usando a função `nx.diameter`) e o **Grau Médio de Separação** (a média de saltos pra ir de um nó a outro, usando `nx.average_shortest_path_length`). Se a rede tiver nós totalmente isolados, o código foca só no maior grupo conectado pra não dar erro.
+2. Logo depois, uso o Matplotlib pra plotar os **Histogramas de Distribuição de Graus**, basicamente contando quantos usuários tem poucas conexões e quantos tem muitas, comparando a rede real com a aleatória em um gráfico só.
 '''))
 
 # Cell 13: Section 6 Code - Caminhos e Diâmetro
@@ -248,7 +251,7 @@ plt.show()
 # Cell 16: Section 7 Markdown
 cells.append(nbf.v4.new_markdown_cell('''## 7. Quadro Resumo Comparativo das Métricas
 
-Abaixo consolido as métricas de todas as três redes em uma única tabela para facilitar a análise comparativa na apresentação.
+Como rodar prints separados fica ruim pra apresentar, criei um DataFrame no Pandas pra juntar todas as métricas (Ordem, Tamanho, Densidade, Agrupamento, Diâmetro e Caminho Médio) das três redes lado a lado numa tabela limpa. Fica bem mais fácil de comparar e tirar as conclusões finais.
 '''))
 
 # Cell 17: Section 7 Code
@@ -270,16 +273,16 @@ print(tabela_comparativa.to_string(index=False))
 # Cell 18: Section 8 Markdown
 cells.append(nbf.v4.new_markdown_cell('''## 8. Conclusões e Discussão dos Resultados
 
-A partir dos testes e dados extraídos neste trabalho prático, destaco os seguintes pontos principais:
+Fechando as análises dos resultados que os códigos geraram, cheguei a três conclusões principais:
 
-1. **Elevado Coeficiente de Agrupamento na Rede Social**:
-   A rede social possui um Coeficiente de Agrupamento ($C$) bem superior ao modelo aleatório de Erdős-Rényi. Isso indica que os usuários tendem a se agrupar em bolhas sociais ou comunidades de interesse.
+1. **Agrupamento alto (as bolhas da internet)**:
+   O código mostrou que a rede social tem um Coeficiente de Agrupamento ($C$) absurdamente maior que a rede aleatória. Isso comprova que os usuários se fecham em nichos e comunidades (se eu sigo duas pessoas, é bem provável que elas também se sigam).
 
-2. **Propriedade de Pequeno Mundo (Small-World)**:
-   Mesmo com um alto agrupamento local, o caminho mínimo médio e o diâmetro da rede real permanecem pequenos. Isso comprova que redes sociais funcionam sob o paradigma de **Pequeno Mundo** (fenômeno dos 6 graus de separação).
+2. **Propriedade de Pequeno Mundo confirmada**:
+   Apesar do agrupamento alto da rede social, o caminho médio ($L$) continua bem pequeno (no mesmo patamar do modelo aleatório). Ou seja, a teoria dos 6 graus de separação é real: com poucos saltos a informação consegue cruzar a rede inteira.
 
-3. **Distribuição de Graus Não-Homogênea**:
-   Ao observar a distribuição de graus, notamos que a rede real conta com influenciadores (*hubs*) altamente conectados, diferenciando-se da distribuição mais homogênea de redes aleatórias.
+3. **Distribuição de Graus (efeito influenciador)**:
+   O gráfico final deixa bem claro que a rede social não é igualitária. Na rede aleatória, a distribuição é um 'sino' onde todo mundo tem a mesma quantidade média de seguidores. Na real, temos uma 'cauda longa' absurda: quase todo mundo tem poucas conexões, mas uns poucos nós 'hubs' (os grandes influenciadores digitais) têm centenas de conexões, puxando o gráfico pra direita.
 '''))
 
 nb['cells'] = cells
