@@ -223,11 +223,11 @@ plt.hist(graus_real, bins=12, alpha=0.7, color='navy', label='Rede Real (Amostra
 # Ploto o histograma da rede aleatória (laranja) no mesmo gráfico pra gente poder comparar visualmente.
 plt.hist(graus_aleat, bins=12, alpha=0.5, color='darkorange', label='Rede Aleatória (Erdős-Rényi)', edgecolor='black')
 
-plt.title('Distribuição de Graus: Rede Real (Instagram) vs. Rede Aleatória (Erdős-Rényi)', fontsize=13, fontweight='bold')
-# Eixo X: o grau k = número de conexões (amizades/seguidores) que um usuário tem
-plt.xlabel('Grau do Nó  k  (Número de Conexões por Usuário)', fontsize=12)
-# Eixo Y: quantos usuários têm aquele grau k específico
-plt.ylabel('Frequência  —  Quantidade de Usuários', fontsize=12)
+plt.title('Distribuicao de Graus: Rede Real (Instagram) vs. Rede Aleatoria (Erdos-Renyi)', fontsize=13, fontweight='bold')
+# Eixo X: o grau k = numero de conexoes (amizades/seguidores) que um usuario tem
+plt.xlabel('Grau do No  k  (Numero de Conexoes por Usuario)', fontsize=12)
+# Eixo Y: quantos usuarios tem aquele grau k especifico
+plt.ylabel('Frequencia - Quantidade de Usuarios', fontsize=12)
 plt.legend(fontsize=11, title='Tipo de Rede', title_fontsize=10)
 plt.grid(True, linestyle='--', alpha=0.6)
 plt.tight_layout()
@@ -252,16 +252,16 @@ pos_s = nx.circular_layout(G_smallworld)
 # Finalmente, mando o NetworkX desenhar (draw_networkx) a rede real no primeiro painel (axes[0])
 # Tirei as labels ('with_labels=False') porque com 300 usuários ia virar uma mancha preta ilegível de tanto texto.
 nx.draw_networkx(G_real, pos_r, ax=axes[0], node_size=100, node_color='navy', with_labels=False, edge_color='gray', alpha=0.7)
-axes[0].set_title('Rede Real (Amostra Instagram)\n● = Usuário  |  — = Conexão entre usuários', fontsize=11, fontweight='bold')
-axes[0].set_xlabel('Os nós centrais com mais linhas são os "hubs" (influenciadores)', fontsize=9, style='italic')
+axes[0].set_title('Rede Real (Amostra Instagram)\nNo = Usuario  |  -- = Conexao entre usuarios', fontsize=11, fontweight='bold')
+axes[0].set_xlabel('Os nos centrais com mais linhas sao os "hubs" (influenciadores)', fontsize=9, style='italic')
 
 nx.draw_networkx(G_aleatorio, pos_a, ax=axes[1], node_size=100, node_color='darkorange', with_labels=False, edge_color='gray', alpha=0.7)
-axes[1].set_title('Rede Aleatória (Erdős-Rényi)\n● = Usuário  |  — = Conexão aleatória', fontsize=11, fontweight='bold')
-axes[1].set_xlabel('Sem centro definido — todas as conexões foram feitas por sorteio', fontsize=9, style='italic')
+axes[1].set_title('Rede Aleatoria (Erdos-Renyi)\nNo = Usuario  |  -- = Conexao aleatoria', fontsize=11, fontweight='bold')
+axes[1].set_xlabel('Sem centro definido - todas as conexoes foram feitas por sorteio', fontsize=9, style='italic')
 
 nx.draw_networkx(G_smallworld, pos_s, ax=axes[2], node_size=100, node_color='forestgreen', with_labels=False, edge_color='gray', alpha=0.7)
-axes[2].set_title('Rede Pequeno Mundo (Watts-Strogatz)\n● = Usuário  |  — = Conexão local ou atalho global', fontsize=11, fontweight='bold')
-axes[2].set_xlabel('Estrutura em anel: grupos locais + pontes aleatórias entre comunidades (p=0.1)', fontsize=9, style='italic')
+axes[2].set_title('Rede Pequeno Mundo (Watts-Strogatz)\nNo = Usuario  |  -- = Conexao local ou atalho global', fontsize=11, fontweight='bold')
+axes[2].set_xlabel('Estrutura em anel: grupos locais + pontes aleatorias entre comunidades (p=0.1)', fontsize=9, style='italic')
 
 plt.tight_layout()
 plt.savefig('comparacao_topologia.png', dpi=300)
