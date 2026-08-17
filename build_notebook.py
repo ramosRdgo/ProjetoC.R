@@ -252,16 +252,16 @@ pos_s = nx.circular_layout(G_smallworld)
 # Finalmente, mando o NetworkX desenhar (draw_networkx) a rede real no primeiro painel (axes[0])
 # Tirei as labels ('with_labels=False') porque com 300 usuários ia virar uma mancha preta ilegível de tanto texto.
 nx.draw_networkx(G_real, pos_r, ax=axes[0], node_size=100, node_color='navy', with_labels=False, edge_color='gray', alpha=0.7)
-axes[0].set_title('Rede Real (Amostra Instagram)\nNo = Usuario  |  -- = Conexao entre usuarios', fontsize=11, fontweight='bold')
-axes[0].set_xlabel('Os nos centrais com mais linhas sao os "hubs" (influenciadores)', fontsize=9, style='italic')
+axes[0].set_title('Rede Real (Amostra Instagram)', fontsize=11, fontweight='bold')
+axes[0].set_xlabel('No = Usuario  |  -- = Conexao  |  Nos centrais = hubs (influenciadores)', fontsize=9, style='italic')
 
 nx.draw_networkx(G_aleatorio, pos_a, ax=axes[1], node_size=100, node_color='darkorange', with_labels=False, edge_color='gray', alpha=0.7)
-axes[1].set_title('Rede Aleatoria (Erdos-Renyi)\nNo = Usuario  |  -- = Conexao aleatoria', fontsize=11, fontweight='bold')
-axes[1].set_xlabel('Sem centro definido - todas as conexoes foram feitas por sorteio', fontsize=9, style='italic')
+axes[1].set_title('Rede Aleatoria (Erdos-Renyi)', fontsize=11, fontweight='bold')
+axes[1].set_xlabel('No = Usuario  |  -- = Conexao  |  Sem centro - conexoes feitas por sorteio', fontsize=9, style='italic')
 
 nx.draw_networkx(G_smallworld, pos_s, ax=axes[2], node_size=100, node_color='forestgreen', with_labels=False, edge_color='gray', alpha=0.7)
-axes[2].set_title('Rede Pequeno Mundo (Watts-Strogatz)\nNo = Usuario  |  -- = Conexao local ou atalho global', fontsize=11, fontweight='bold')
-axes[2].set_xlabel('Estrutura em anel: grupos locais + pontes aleatorias entre comunidades (p=0.1)', fontsize=9, style='italic')
+axes[2].set_title('Rede Pequeno Mundo (Watts-Strogatz)', fontsize=11, fontweight='bold')
+axes[2].set_xlabel('No = Usuario  |  -- = Conexao  |  Anel + pontes aleatorias (p=0.1)', fontsize=9, style='italic')
 
 plt.tight_layout()
 plt.savefig('comparacao_topologia.png', dpi=300)
